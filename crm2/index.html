@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <title>Schaufenster | {{ shop.name }}</title>
+    <style>
+      body {
+        height: 100vh;
+      }
+
+      .title-image {
+        flex: 3;
+        height: 100vh;
+        background-size: cover;
+        background-position: center;
+      }
+      .item {
+        display: flex;
+      }
+      .table td,
+      .table th {
+        padding: 0.45rem 0;
+      }
+      .headline {
+        font-size: 1.5rem;
+        font-weight: 300;
+      }
+      .sub-title {
+        font-size: 1.05rem;
+        font-weight: 300;
+      }
+
+      {% if shop.color %}
+        .text-primary {
+          color: {{ shop.color }}
+           !important;
+        }
+
+      {% endif %}
+      td:first-child {
+        width: 140px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="template">
+    <div class="house-description">
+      <div class="owl-carousel owl-theme">
+          <div class="item">
+            <div class="logo-container">
+              <div class="logo1">
+              <div class="logo"></div></div>
+      
+              <style>
+
+                .logo-container {
+                  display: flex;
+                  align-items: center;
+                }
+      
+                .logo {
+                  filter: drop-shadow(0px 0px 22px #FFF);
+                  width:177px;
+                  height:84px;
+                  position:absolute;
+                  left:24px;
+                  top:20px;
+                  background-image:url(images/logo_high_resolution.png);
+                  background-repeat:no-repeat;
+                  background-size:cover;
+                }
+
+              </style>
+          </div>
+            <div class="title-image" style="background-image: url('images/housetestimg.png');"></div>
+            <div class="col custom-padding p-4" style="background-color: white;">
+              <br>
+              <br>
+              <h5 class="sub-title text-primary">{{ property.city }} - {{ property.location_name }}</h5>
+              <h1 class="headline">{{ property.title }}</h1>
+              <br>
+              <br>
+              <br>
+                <h5 class="sub-title text-primary">Grunddaten</h5>
+                <table class="table mb-4">
+                  <tr>
+                    <td>Objekt</td>
+                    <td>{{ property.unit_id }}</td>
+                  </tr>
+                  <tr>
+                    <td>Grund</td>
+                    <td>{{ property.plot_area | space }}</td>
+                  </tr>
+                  <tr>
+                    <td>GFZ</td>
+                    <td>{{ property.gfz | number }}</td>
+                  </tr>
+                  <tr>
+                    <td>GRZ</td>
+                    <td>{{ property.grz | number }}</td>
+                  </tr>
+                </table>
+                <h5 class="sub-title text-primary">Flächenaufstellung</h5>
+                <table class="table mb-4">
+                  {% if property.rs_type == "HOUSE" %}
+                    <tr>
+                      <td>Grundstück</td>
+                      <td>ca. {{ property.plot_area | space }}</td>
+                    </tr>
+                  {% endif %}
+                  <tr>
+                    <td>Wohnfläche</td>
+                    <td>ca. {{ property.living_space | space }}</td>
+                  </tr>
+                  <tr>
+                    <td>Nutzfläche</td>
+                    <td>ca. {{ property.usable_floor_space | space }}</td>
+                  </tr>
+                  <tr>
+                    <td>Zimmer</td>
+                    <td>{{ property.number_of_rooms | number }}</td>
+                  </tr>
+                </table>
+              {% endif %}
+              {% if property.marketing_type == "BUY" %}
+                <h5 class="sub-title text-primary">Kaufpreis</h5>
+                <table class="table mb-4">
+                  <tr>
+                    <td>Kaufpreis</td>
+                    <td>{{ property.formatted.price }}</td>
+                  </tr>
+                  <tr>
+                    <td>Provision</td>
+                    <td>{{ property.courtage }}</td>
+                  </tr>
+                </table>
+                  {% endif %}
+
+                  {% endif %}
+                </table>
+              {% endif %}
+
+              <br>
+
+              <!-- qrcode -->
+
+             <div class="container">
+                <div class="text-container">
+                    <h5 class="sub-title text-primary">{{ property.city }} - {{ property.location_name }}</h5>
+                    <h1 class="headline">{{ property.title }}</h1>
+                    <h6><strong>Lern Mehr</strong></h6>
+                </div>
+                <div class="qrcode-container">
+                  <table class="qrcode">
+                    <td>
+                      {{ einheit.custom.objekt_webseiten_url }}
+                    </td>
+                  </table>
+                <style>
+                  .container {
+                      display: flex;
+                      align-items: center;
+                      gap: 22px;
+                  }
+
+                  .text-container {
+                      flex: 1;
+                  }
+
+                  .sub-title {
+                      font-size: 90%;
+                  }
+
+                  .headline {
+                      font-size: 99%;
+                  }
+
+                  .qrcode-container {
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                  }
+
+                  h6 {
+                      font-size: 90%;
+                      margin-top: 5px;
+                  }
+                </style>
+            </div>
+              </div>
+              
+            </div>
+            
+          </div>
+          
+        </div>
+      </div>
+      <script>
+        $('.owl-carousel').owlCarousel({
+          animateOut: 'fadeOut',
+          autoplay: true,
+          autoplayTimeout: 10000,
+          loop: true,
+          nav: false,
+          dots: false,
+          responsive: {
+            0: {
+              items: 1
+            },
+            600: {
+              items: 1
+            },
+            1000: {
+              items: 1
+            }
+          }
+        });
+        setTimeout(function() {
+          location.reload();
+        }, 1000 * 60 * 10);
+      </script>
+    </div>
+      <footer class="fixed-bottom">
+        <div class="footer">
+            <div class="footer-content">
+        <ul class="socials">
+          <li id="social" class="i1">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="59" viewBox="0 0 50 50">
+              <path d="M 16 3 C 8.83 3 3 8.83 3 16 L 3 34 C 3 41.17 8.83 47 16 47 L 34 47 C 41.17 47 47 41.17 47 34 L 47 16 C 47 8.83 41.17 3 34 3 L 16 3 z M 37 11 C 38.1 11 39 11.9 39 13 C 39 14.1 38.1 15 37 15 C 35.9 15 35 14.1 35 13 C 35 11.9 35.9 11 37 11 z M 25 14 C 31.07 14 36 18.93 36 25 C 36 31.07 31.07 36 25 36 C 18.93 36 14 31.07 14 25 C 14 18.93 18.93 14 25 14 z M 25 16 C 20.04 16 16 20.04 16 25 C 16 29.96 20.04 34 25 34 C 29.96 34 34 29.96 34 25 C 34 20.04 29.96 16 25 16 z"></path>
+          </svg>
+            <strong>Instagram</strong></a>
+            <h3 id="link" style="width: 640px">fem_realestate_services</h3>
+          </li>
+          <li id="social" class="i2">
+            <a href="#"><svg xmlns="http://www.w3.org/2000/svg"width="59" viewBox="0 0 50 50">
+                <path d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"></path>
+                </svg>
+            <strong>Facebook</strong></a>
+            <h3 id="link" style="width: 640px">FEM Real Estate Services</h3>
+          </li>
+          <li>
+          <img src="images/Emblem 2023 - PMA® Fachtraining für Immobilienmakler (gross transparent).png" width="89" class="b-icon">
+          </li>
+          <li class="logoasset">
+            <img src="images/Partner_Siegel_1.gif" width="100" style="padding-bottom: 10px; text-align: center; border-radius: 10px;">
+          </li>
+          </ul>
+          <style>
+
+            /* gif logo: padding-bottom: 10px; */
+
+            .logoasset {
+              position: relative;
+              bottom: 12px;
+              right: 0;
+              transform: translateX(-50%);
+              padding-bottom: 11px; /* Additional padding */
+              padding-left: 30%;
+              padding-right: 40px;
+            }
+
+
+            .footer-content {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              flex-direction: column;
+            }
+
+            .fixed-bottom {
+              width: 50%;
+            }
+
+          .socials {
+            background-color: #ffffff;
+            padding: 20px;
+            min-height: 120px;
+            max-height: 30px;
+            position: fixed;
+            bottom: 0;
+            border-top-right-radius: 10px;
+            box-shadow: 14px -5px 39px 7px rgba(83, 83, 83, 0.25);
+          }
+
+        .socials, ul {
+          left: 0;
+            display: flex;
+            align-items: start;
+            justify-content: left;
+            list-style: none;
+            gap: 10px;
+            margin: 0;
+        }
+
+        .socials a, li {
+            text-decoration: none;
+            background: linear-gradient(96deg, #587DFF -2.74%, #59A9D6 73.06%, #3049A0 123.92%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+         }
+
+        #social {
+            padding: 12px;
+            width: 220px;
+            transform: scale(1);
+         }
+
+        #link {
+            padding-top: 15px;
+            font-size: 88%;
+            width: 200px;
+         }
+          </style>
+      </div>
+      
+      <!-- ==== Responsive ==== -->
+
+      <style>
+
+        @media only screen and (min-width: 1440px){
+          .custom-padding {
+                padding-bottom: 0;
+              }
+
+          .col {
+            font-size: 72%;
+            overflow-y: hidden;
+          }
+
+          #social {
+            top: 0;
+            bottom: 0;
+            padding-top: 1px;
+          }
+
+          .i1 svg,
+          .i2 svg {
+            transform: scale(0.3);
+            
+          }
+
+          #link {
+            padding-top: 5px;
+          }
+        }
+
+        @media only screen and (min-width: 4235px) and (max-width: 4320px) {
+          .col {
+            font-size: 430%;
+          }
+
+          .logo {
+            width: 600px;
+            height: 290px;
+          }
+
+          .socials {
+            background-color: #ffffff;
+            padding: 60px;
+            min-height: 380px;
+            max-height: 470px;
+            position: fixed;
+            bottom: 0;
+            border-top-right-radius: 10px;
+            padding-right: 190px;
+          }
+
+        .socials, ul {
+          left: 0;
+            display: flex;
+            align-items: start;
+            justify-content: left;
+            list-style: none;
+            gap: 450px;
+            margin: 0;
+            font-size: 20%;
+            
+        }
+
+        .socials a, li {
+          font-size: 50px;
+            text-decoration: none;
+            background: linear-gradient(96deg, #587DFF -2.74%, #59A9D6 73.06%, #3049A0 123.92%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+         }
+
+        #social {
+            padding: 12px;
+            width: 220px;
+            border-radius: 30px;
+            width: 500px;
+         }
+
+         .b-icon {
+          padding-top: 20px;
+          scale: 3;
+         }
+
+         .logoasset {
+          padding-top: 35px;
+          padding-right: 120px;
+          scale: 1;
+         }
+        }
+
+        @media only screen and (min-width: 2400px) and (max-width: 2500px) {
+          .col {
+            font-size: 160%;
+          }
+        }
+
+        @media only screen and (min-width: 2501px) and (max-width: 2600px) {
+          .col {
+            font-size: 180%;
+          }
+
+          .socials, li {
+            padding-bottom: 50px;
+            padding-top: 0;
+          }
+
+          .b-icon {
+            padding-top: 20px;
+          }
+
+          .logoasset {
+            padding-top: 25px;
+          }
+        }
+
+        @media only screen and (min-width: 2840px) {
+          .col {
+            font-size: 280%;
+          }
+
+          .logo {
+            width: 600px;
+            height: 290px;
+          }
+
+          .socials {
+            background: white;
+            padding: 60px;
+            min-height: 260px;
+            max-height: 270px;
+            position: fixed;
+            bottom: 0;
+            border-top-right-radius: 10px;
+            padding-right: 190px;
+          }
+
+        .socials, ul {
+          left: 0;
+            display: flex;
+            align-items: start;
+            justify-content: left;
+            list-style: none;
+            gap: 150px;
+            margin: 0;
+            
+        }
+
+        .socials a, li {
+          font-size: 50px;
+            text-decoration: none;
+            color: white;
+         }
+
+        #social {
+            padding: 12px;
+            width: 220px;
+            border-radius: 30px;
+            transform: scale(1);
+            width: 500px;
+         }
+
+         .b-icon {
+          padding-top: 20px;
+          scale: 2.4;
+         }
+
+         .logoasset {
+          padding-top: 35px;
+          padding-right: 20px;
+          scale: 2;
+         }
+
+        }
+
+        @media only screen and (min-width: 3840px) and (min-height: 2160px) {
+
+          .col {
+            font-size: 265%;
+          }
+
+          .i1 svg,
+          .i2 svg {
+            transform: scale(1);
+            
+          }
+
+        }
+
+      </style>
+        
+    </div>
+  </body>
+</html>
+
